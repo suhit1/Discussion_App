@@ -1,223 +1,170 @@
-let subject = document.getElementById("subject");
-let question = document.getElementById("question");
+// Taking reference
+
+let question_display = document.getElementById("question_display");
+let welcome_div = document.getElementById("welcome_div");
 let submit = document.getElementById("submit");
-let new_left = document.getElementById("new_left");
-let append_right_side = document.getElementById("append_right_side");
-let welcome_right_side = document.getElementById("welcome_right_side");
-let response_section = document.getElementById("response_section");
-let add_response = document.getElementById("add_response");
+let subject = document.getElementById("subject");
+let textarea = document.getElementById("textarea");
+let right_after = document.getElementById("right_after");
+let question_div_heading = document.getElementById("question_div_heading");
+let question_div_para = document.getElementById("question_div_para");
+let submit_after_right = document.getElementById("submit_after_right");
+let response_div = document.getElementById("response_div");
+let enter_name = document.getElementById("enter_name");
+let textarea_comment = document.getElementById("textarea_comment");
+let resolve = document.getElementById("resolve");
 let search = document.getElementById("search");
 
-let my_data = localStorage.getItem("data");
+// check for localStorage
 
-if (my_data) my_data = JSON.parse(my_data);
+let data = localStorage.getItem("data");
+if (data) data = JSON.parse(data);
 
-let array = my_data || [];
+// array
 
-// For Each  loop to data
+let main_array = data || [];
 
-let subject_title;
-let question_title;
-let container;
-let subject_heading;
-let question_head;
+main_array.forEach((val) => {
+  let div_inner = document.createElement("div");
 
-array.forEach((data) => {
-  // let subject_title = data.title;
-  // let question_title = data.discription;
+  let h1 = document.createElement("h1");
+  h1.innerText = val.title;
 
-  // let container = document.createElement("div");
+  let p = document.createElement("p");
+  p.innerText = val.discription;
 
-  // let subject_heading = document.createElement("h2");
-  // let question_heading = document.createElement("p");
+  div_inner.appendChild(h1);
+  div_inner.appendChild(p);
 
-  // subject_heading.innerText = subject_title;
-  // question_heading.innerText = question_title;
+  div_inner.setAttribute("class", "div_inner");
 
-  // container.appendChild(subject_heading);
-  // container.appendChild(question_heading);
+  question_display.appendChild(div_inner);
 
-  // container.classList.add("new_container");
+  div_inner.addEventListener("click", function () {
+    welcome_div.style.display = "none";
+    right_after.style.display = "block";
 
-  // new_left.appendChild(container);
-  subject_title = data.title;
-  question_title = data.discription;
-  container_data();
+    question_div_heading.innerText = h1.innerText;
+    question_div_para.innerText = p.innerText;
+
+    resolve.addEventListener("click", function () {
+      div_inner.style.display = "none";
+      right_after.style.display = "none";
+      welcome_div.style.display = "block";
+      welcome_div.setAttribute("class", "welcome_div");
+    });
+  });
 });
 
+// addEventlistners
+
 submit.addEventListener("click", function () {
-  welcome_right_side.setAttribute("class", "welcome_right_side");
-  response_section.style.display = "none";
-  add_response.style.display = "none";
+  add_div();
+});
 
-  subject_title = subject.value;
-  question_title = question.value;
-  container_data();
+submit_after_right.addEventListener("click", function () {
+  let div_inner = document.createElement("div");
 
-  array.push({
-    title: subject_title,
-    discription: question_title,
-  });
+  let h1 = document.createElement("h1");
+  let enter_text = enter_name.value;
+  h1.innerText = enter_text;
 
-  localStorage.setItem("data", JSON.stringify(array));
+  let p = document.createElement("p");
+  let textarea_text = textarea_comment.value;
+  p.innerText = textarea_text;
 
-  // If we click on div at left side
+  div_inner.appendChild(h1);
+  div_inner.appendChild(p);
 
-  container.addEventListener("click", function () {
-    welcome_right_side.style.display = "none";
+  div_inner.setAttribute("class", "div_inner");
 
-    let question_heading1 = document.createElement("h1");
-    question_heading1.innerText = "Question";
-
-    question_heading1.setAttribute("class", "question_heading");
-
-    let right_div = document.createElement("div");
-
-    let resolve_button = document.createElement("button");
-    resolve_button.innerText = "Resolve";
-
-    resolve_button.setAttribute("class", "resolve");
-
-    let = subject_heading_right = subject_heading;
-    let question_heading_right = question_heading;
-
-    right_div.appendChild(subject_heading_right);
-    right_div.appendChild(question_heading_right);
-
-    append_right_side.appendChild(right_div);
-    append_right_side.appendChild(resolve_button);
-    append_right_side.appendChild(question_heading1);
-
-    // response section div
-
-    let response = document.createElement("h2");
-    response.innerText = "Response";
-
-    response_section.appendChild(response);
-
-    response_section.style.display = "block";
-
-    // Add response section div
-
-    let add_response_div = document.createElement("div");
-    add_response_div.classList.add("add_response_div");
-
-    let add_response_heading = document.createElement("h2");
-    add_response_heading.innerText = "Add Response";
-
-    let enter_name = document.createElement("input");
-    enter_name.setAttribute("placeholder", "Enter Name");
-
-    enter_name.setAttribute("class", "enter_name");
-
-    let textarea = document.createElement("textarea");
-    textarea.setAttribute("placeholder", "Enter Comment");
-
-    textarea.setAttribute("class", "textarea");
-
-    let submit_button = document.createElement("button");
-    submit_button.innerText = "Submit";
-
-    submit_button.setAttribute("class", "submit_button");
-
-    add_response_div.appendChild(add_response_heading);
-    add_response_div.appendChild(enter_name);
-    add_response_div.appendChild(textarea);
-    add_response_div.appendChild(submit_button);
-
-    add_response.appendChild(add_response_div);
-
-    add_response.setAttribute("class", "add_response");
-
-    add_response.style.display = "block";
-
-    append_right_side.style.display = "block";
-
-    resolve_button.addEventListener("click", function () {
-      welcome_right_side.style.display = "block";
-      welcome_right_side.setAttribute("class", "welcome_right_side");
-
-      append_right_side.innerHTML = "";
-
-      append_right_side.style.display = "none";
-
-      response_section.style.display = "none";
-      add_response.style.display = "none";
-      response_section.innerHTML = "";
-      add_response.innerHTML = "";
-
-      container.innerHTML = "";
-    });
-
-    submit_button.addEventListener("click", function () {
-      let enter_name_text = enter_name.value;
-      let textarea_name_text = textarea.value;
-
-      let response_inner_div = document.createElement("div");
-      let name_val = document.createElement("h2");
-      let comments_val = document.createElement("h4");
-
-      name_val.innerText = enter_name_text;
-      comments_val.innerText = textarea_name_text;
-
-      response_inner_div.appendChild(name_val);
-      response_inner_div.appendChild(comments_val);
-
-      response_inner_div.setAttribute("class", "response_inner_div");
-
-      let response_div = document.createElement("div");
-
-      response_div.appendChild(response_inner_div);
-
-      response_section.appendChild(response_div);
-    });
-  });
+  response_div.appendChild(div_inner);
 });
 
 search.addEventListener("input", function () {
   let search_value = search.value;
-  if (search_value) new_left.innerHTML = "";
-
-  let new_arr = array.filter((val) => {
+  if (search_value) question_display.innerText = "";
+  let new_arr = main_array.filter((val) => {
     if (val.title.includes(search_value)) return true;
   });
-
   if (new_arr) {
+    question_display.innerText = "";
     new_arr.forEach((val) => {
-      let container = document.createElement("div");
-      let title = document.createElement("h1");
-      let discription = document.createElement("p");
+      let div_inner = document.createElement("div");
 
-      title.innerText = val.title;
-      discription.innerText = val.discription;
+      let h1 = document.createElement("h1");
+      h1.innerText = val.title;
 
-      container.appendChild(title);
-      container.appendChild(discription);
+      let p = document.createElement("p");
+      p.innerText = val.discription;
 
-      new_left.appendChild(container);
+      div_inner.appendChild(h1);
+      div_inner.appendChild(p);
 
-      container.setAttribute("class", "new_container");
+      div_inner.setAttribute("class", "div_inner");
+
+      question_display.appendChild(div_inner);
+    });
+  } else {
+    question_display.innerText = "";
+    main_array.forEach((val) => {
+      let div_inner = document.createElement("div");
+
+      let h1 = document.createElement("h1");
+      h1.innerText = val.title;
+
+      let p = document.createElement("p");
+      p.innerText = val.discription;
+
+      div_inner.appendChild(h1);
+      div_inner.appendChild(p);
+
+      div_inner.setAttribute("class", "div_inner");
+
+      question_display.appendChild(div_inner);
     });
   }
-
-  console.log(new_arr);
 });
 
-//functions
+// functions
 
-function container_data() {
-  container = document.createElement("div");
+function add_div() {
+  let div_inner = document.createElement("div");
 
-  subject_heading = document.createElement("h2");
-  question_heading = document.createElement("p");
+  let h1 = document.createElement("h1");
+  let subject_text = subject.value;
+  h1.innerText = subject_text;
 
-  subject_heading.innerText = subject_title;
-  question_heading.innerText = question_title;
+  let p = document.createElement("p");
+  let textarea_text = textarea.value;
+  p.innerText = textarea_text;
 
-  container.appendChild(subject_heading);
-  container.appendChild(question_heading);
+  div_inner.appendChild(h1);
+  div_inner.appendChild(p);
 
-  container.classList.add("new_container");
+  div_inner.setAttribute("class", "div_inner");
 
-  new_left.appendChild(container);
+  question_display.appendChild(div_inner);
+
+  main_array.push({
+    title: subject_text,
+    discription: textarea_text,
+  });
+
+  localStorage.setItem("data", JSON.stringify(main_array));
+
+  div_inner.addEventListener("click", function () {
+    welcome_div.style.display = "none";
+    right_after.style.display = "block";
+
+    question_div_heading.innerText = h1.innerText;
+    question_div_para.innerText = p.innerText;
+
+    resolve.addEventListener("click", function () {
+      div_inner.style.display = "none";
+      right_after.style.display = "none";
+      welcome_div.style.display = "block";
+      welcome_div.setAttribute("class", "welcome_div");
+    });
+  });
 }

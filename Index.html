@@ -4,52 +4,52 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Discussion App(CQ)</title>
+    <title>Discussion App</title>
     <link rel="stylesheet" href="Style.css" />
   </head>
   <body>
     <header>
-      <h2 class="heading">Discussion Portal</h2>
+      <h1 class="header_heading">Discussion portal</h1>
     </header>
-    <div class="container">
-      <div class="left_side">
-        <div class="new_question">
-          <button class="new_form">New Question Form</button>
-          <input type="text" id="search" placeholder="Search" class="search" />
+    <main>
+      <div class="container">
+        <div class="left_side">
+          <div class="question_form">
+            <button id="newquestion">New Question Form</button>
+            <input type="text" placeholder="Search Questions..." id="search" />
+          </div>
+          <div id="question_display" class="question_display"></div>
         </div>
-        <div id="new_left" class="new_left"></div>
-      </div>
-      <div class="right_side">
-        <div class="welcome_right_side" id="welcome_right_side">
-          <h2>Welcome To Discussion portal!</h2>
-          <p>Enter a subject and question to get started</p>
-          <input
-            id="subject"
-            type="text"
-            placeholder="subject"
-            class="subject"
-          />
-          <textarea
-            id="question"
-            name="question"
-            placeholder="Question"
-            class="question"
-          ></textarea>
-          <button id="submit" class="submit">Submit</button>
+        <div class="right_side">
+          <div id="welcome_div" class="welcome_div">
+            <h1 class="welcome_heading">Welcome To Discussion Portal</h1>
+            <p class="para">Enter a subject and heading to get started</p>
+            <input placeholder="Subject" type="text" id="subject" />
+            <textarea id="textarea" placeholder="Question"></textarea>
+            <button id="submit">Submit</button>
+          </div>
+          <div id="right_after" style="display: none" class="right_after">
+            <h1 class="questions_heading">Questions</h1>
+            <div class="question_div">
+              <h1 id="question_div_heading" class="question_div_heading"></h1>
+              <p id="question_div_para" class="question_div_para"></p>
+              <button id="resolve">Resolve</button>
+              <h1 class="respnses_heading">Responses</h1>
+              <div id="response_div" class="response_div"></div>
+              <div class="add_response_div">
+                <h1 class="add_response">Add Response</h1>
+                <input type="text" placeholder="Enter Name" id="enter_name" />
+                <textarea
+                  placeholder="Enter Comments"
+                  id="textarea_comment"
+                ></textarea>
+                <button id="submit_after_right">Submit</button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div
-          style="display: none"
-          id="append_right_side"
-          class="append_right_side"
-        ></div>
-        <div
-          style="display: none"
-          class="response_section"
-          id="response_section"
-        ></div>
-        <div style="display: none" class="add_response" id="add_response"></div>
       </div>
-    </div>
+    </main>
     <script src="Script.js"></script>
   </body>
 </html>
