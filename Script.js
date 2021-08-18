@@ -47,11 +47,43 @@ main_array.forEach((val) => {
     question_div_heading.innerText = h1.innerText;
     question_div_para.innerText = p.innerText;
 
+    let result = main_array.find((data) => {
+      if (data.title === h1.innerText) return true;
+    });
+    let index = main_array.indexOf(result);
+    response_div.innerText = "";
+    console.log(index);
+    main_array[index].response.forEach((data) => {
+      let div_inner = document.createElement("div");
+
+      let h1 = document.createElement("h1");
+      h1.innerText = data.enterName;
+
+      let p = document.createElement("p");
+      p.innerText = data.comment;
+
+      div_inner.appendChild(h1);
+      div_inner.appendChild(p);
+
+      div_inner.setAttribute("class", "div_inner");
+
+      response_div.appendChild(div_inner);
+    });
+
     resolve.addEventListener("click", function () {
       div_inner.style.display = "none";
       right_after.style.display = "none";
       welcome_div.style.display = "block";
+      welcome_div.style.display = "flex";
       welcome_div.setAttribute("class", "welcome_div");
+
+      let result = main_array.find((data) => {
+        if (data.title === h1.innerText) return true;
+      });
+      let index = main_array.indexOf(result);
+      main_array.splice(index, 1);
+      console.log(main_array);
+      localStorage.setItem("data", JSON.stringify(main_array));
     });
   });
 });
@@ -79,6 +111,27 @@ submit_after_right.addEventListener("click", function () {
   div_inner.setAttribute("class", "div_inner");
 
   response_div.appendChild(div_inner);
+
+  main_array.forEach((val) => {
+    let h1 = val.title;
+
+    let result = main_array.find((data) => {
+      if (data.title === h1) return true;
+    });
+    let index = main_array.indexOf(result);
+    console.log(index);
+  });
+
+  // let result = main_array.find((data) => {
+  //   if (data.title === h2) return true;
+  // });
+  // let index = main_array.indexOf(result);
+  // console.log(index);
+  // main_array[index].response.push({
+  //   enterName: enter_text,
+  //   comment: textarea_text,
+  // });
+  // localStorage.setItem("data", JSON.stringify(main_array));
 });
 
 search.addEventListener("input", function () {
@@ -89,40 +142,19 @@ search.addEventListener("input", function () {
   });
   if (new_arr) {
     question_display.innerText = "";
-    new_arr.forEach((val) => {
-      let div_inner = document.createElement("div");
-
-      let h1 = document.createElement("h1");
-      h1.innerText = val.title;
-
-      let p = document.createElement("p");
-      p.innerText = val.discription;
-
-      div_inner.appendChild(h1);
-      div_inner.appendChild(p);
-
-      div_inner.setAttribute("class", "div_inner");
-
-      question_display.appendChild(div_inner);
-    });
-  } else {
+    arrayforEach(new_arr);
+  } else if (!search_value) {
     question_display.innerText = "";
-    main_array.forEach((val) => {
-      let div_inner = document.createElement("div");
-
-      let h1 = document.createElement("h1");
-      h1.innerText = val.title;
-
-      let p = document.createElement("p");
-      p.innerText = val.discription;
-
-      div_inner.appendChild(h1);
-      div_inner.appendChild(p);
-
-      div_inner.setAttribute("class", "div_inner");
-
-      question_display.appendChild(div_inner);
-    });
+    arrayforEach();
+  }
+  if (new_arr.length === 0) {
+    console.log(new_arr);
+    let div_inner = document.createElement("div");
+    let h1 = document.createElement("h1");
+    h1.innerText = `No Match Found`;
+    div_inner.appendChild(h1);
+    div_inner.setAttribute("class", "div_inner");
+    question_display.appendChild(div_inner);
   }
 });
 
@@ -149,6 +181,7 @@ function add_div() {
   main_array.push({
     title: subject_text,
     discription: textarea_text,
+    response: [],
   });
 
   localStorage.setItem("data", JSON.stringify(main_array));
@@ -160,11 +193,62 @@ function add_div() {
     question_div_heading.innerText = h1.innerText;
     question_div_para.innerText = p.innerText;
 
+    let result = main_array.find((data) => {
+      if (data.title === h1.innerText) return true;
+    });
+    let index = main_array.indexOf(result);
+    response_div.innerHTML = "";
+    main_array[index].response.forEach((data) => {
+      let div_inner = document.createElement("div");
+
+      let h1 = document.createElement("h1");
+      h1.innerText = data.enterName;
+
+      let p = document.createElement("p");
+      p.innerText = data.comment;
+
+      div_inner.appendChild(h1);
+      div_inner.appendChild(p);
+
+      div_inner.setAttribute("class", "div_inner");
+
+      response_div.appendChild(div_inner);
+    });
+
     resolve.addEventListener("click", function () {
       div_inner.style.display = "none";
       right_after.style.display = "none";
       welcome_div.style.display = "block";
+      welcome_div.style.display = "flex";
       welcome_div.setAttribute("class", "welcome_div");
+
+      let result = main_array.find((data) => {
+        if (data.title === h1.innerText) return true;
+      });
+      let index = main_array.indexOf(result);
+      main_array.splice(index, 1);
+      localStorage.setItem("data", JSON.stringify(main_array));
     });
   });
 }
+
+function arrayforEach(defaultarray = main_array) {
+  defaultarray.forEach((val) => {
+    let div_inner = document.createElement("div");
+
+    let h1 = document.createElement("h1");
+    h1.innerText = val.title;
+
+    let p = document.createElement("p");
+    p.innerText = val.discription;
+
+    div_inner.appendChild(h1);
+    div_inner.appendChild(p);
+
+    div_inner.setAttribute("class", "div_inner");
+
+    question_display.appendChild(div_inner);
+  });
+}
+
+console.log(main_array);
