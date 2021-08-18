@@ -122,16 +122,15 @@ submit_after_right.addEventListener("click", function () {
     console.log(index);
   });
 
-  // let result = main_array.find((data) => {
-  //   if (data.title === h2) return true;
-  // });
-  // let index = main_array.indexOf(result);
-  // console.log(index);
-  // main_array[index].response.push({
-  //   enterName: enter_text,
-  //   comment: textarea_text,
-  // });
-  // localStorage.setItem("data", JSON.stringify(main_array));
+  let result = main_array.find((data) => {
+    if (data.title === question_div_heading.innerText) return true;
+  });
+  let index = main_array.indexOf(result);
+  main_array[index].response.push({
+    enterName: enter_text,
+    comment: textarea_text,
+  });
+  localStorage.setItem("data", JSON.stringify(main_array));
 });
 
 search.addEventListener("input", function () {
